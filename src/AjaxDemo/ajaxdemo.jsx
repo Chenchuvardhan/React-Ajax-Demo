@@ -1,22 +1,28 @@
 import { useEffect, useState } from "react";
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../../node_modules/bootstrap-icons/font/bootstrap-icons.css'
+import axios from "axios";
 export function AjaxDemo() {
-    const [product, setProduct] = useState({ title: "", rating: { rate: 0, ratings: 0, reviews: 0 }, image: "", price: 0, offers: [] });
+    const [product, setProduct] = useState({ title: "", rating: { rate: 0, ratings: 0, reviews: 0 }, image: null, price: 0, offers: [] });
     function GetProduct() {
-        let http = new XMLHttpRequest();
-        http.open("GET", "oppomobile.json", true);
-        http.send();
-        http.onreadystatechange = function () {
-            if (http.readyState == 4) {
-                setProduct(JSON.parse(http.responseText));
-            }
+        // let http = new XMLHttpRequest();
+        // http.open("GET", "oppomobile.json", true);
+        // http.send();
+        // http.onreadystatechange = function () {
+        //     if (http.readyState == 4) {
+        //         setProduct(JSON.parse(http.responseText));
+        //     }
+         axios.get('oppomobile.json')
+            .then(response=>{
+                console.log(response);
+                setProduct(response.data);
+            })
         }
-    }
+    
     useEffect(() => {
         GetProduct();
-    }, [product]);
-    return (
+    }, []);
+    return(
         <div className="container-fluid">
             <div className="row mt-4">
                 <div className="col-3">
